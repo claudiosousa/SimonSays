@@ -68,7 +68,7 @@ void handleColorPress(int color) {
 
 void gameLoop() {
 
-  int color = tryReadButtons();
+  int color = readButtons();
   if (color != -1) {
     handleColorPress(color);
     return;

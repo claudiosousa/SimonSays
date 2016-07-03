@@ -1,6 +1,6 @@
 #include <toneAC.h>
 
-typedef enum Color{
+typedef enum Color {
   Green,
   Red,
   Yellow,
@@ -9,9 +9,9 @@ typedef enum Color{
 
 Color colors[4] = {Green, Red, Yellow, Blue};
 byte colorPin[4] = {6, 5, 8, 7};
-float colorSound[4] = {note_E3, note_A4, note_Db4, note_E4}; 
+float colorSound[4] = {note_E3, note_A4, note_Db4, note_E4};
 
-typedef struct Move{
+typedef struct Move {
   Color color;
   struct Move * next;
 } Move ;
@@ -22,10 +22,10 @@ void setupBoard() {
     digitalWrite(colorPin[colors[i]], LOW);
   }
   /*
-  showColor(Green);
-  showColor(Red);
-  showColor(Yellow);
-  showColor(Blue);
+    showColor(Green);
+    showColor(Red);
+    showColor(Yellow);
+    showColor(Blue);
   */
 }
 
@@ -38,11 +38,16 @@ void showColor(int color) {
   digitalWrite(colorPin[color], LOW);
 }
 
-void showColorWhileButton(int color){
-
+void showColorWhileButton(int color) {
+  toneAC(colorSound[color]);
+  digitalWrite(colorPin[color], HIGH);
+  delay(200); //min duration
+  loopWhileButtonPressed(color);
+  toneAC(0);
+  digitalWrite(colorPin[color], LOW);
 }
 
-void showWrongColor(int color){
+void showWrongColor(int color) {
   delay(200);
   toneAC(note_C3);
   digitalWrite(colorPin[color], HIGH);

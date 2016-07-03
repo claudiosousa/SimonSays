@@ -6,11 +6,21 @@ void setupButons() {
   }
 }
 
-int tryReadButtons() {
+bool isButtonsPressed(int button) {
+  return !digitalRead(buttons[button]);
+}
+
+void loopWhileButtonPressed(int button) {
+  while (isButtonsPressed(button)) {
+    delay(50);
+  }
+}
+
+int readButtons() {
   //  if (keyPressed){
   //    keyPressed = false;
   for (int i = 0; i < 4; i++) {
-    if (!digitalRead(buttons[i]))
+    if (isButtonsPressed(i))
       return colors[i];
   }
   //  }
