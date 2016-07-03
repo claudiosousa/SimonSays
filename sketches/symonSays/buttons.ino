@@ -1,13 +1,19 @@
-volatile bool keyPressed = false;
 int buttons[4] = {0, 1, 3, 4};
 
 void setupButons() {
   for (int i = 0; i < 4; i++) {
-    pinMode(buttons[i], INPUT);
+    pinMode(buttons[i], INPUT_PULLUP);
   }
 }
 
-void tryReadButtons(){
-  
+int tryReadButtons() {
+  //  if (keyPressed){
+  //    keyPressed = false;
+  for (int i = 0; i < 4; i++) {
+    if (!digitalRead(buttons[i]))
+      return colors[i];
+  }
+  //  }
+  return -1;
 }
 

@@ -1,16 +1,10 @@
-/*#define led_dataPin 4
-  #define led_LATCH_HIGH sbi(PORTD, led_latchPin)
-  #define led_LATCH_LOW cbi(PORTD, led_latchPin)
-
-*/
-
-bool isPlayerPlaying = false;
 Move * gameMoves = NULL;
+Move * currentMove2find = NULL;
 
 void setupGame() {
-  pinMode(6, OUTPUT);
-
   newGame();
+  showCurrentGame();
+  resetMove2Find();
 }
 
 struct Move * createGameMove() {
@@ -18,6 +12,10 @@ struct Move * createGameMove() {
   newMove->next = NULL;
   newMove->color = colors[random(4)];
   return newMove;
+}
+
+void resetMove2Find() {
+  currentMove2find = gameMoves;
 }
 
 void freeGameMoves(Move * currentMove) {
@@ -43,20 +41,38 @@ void newGame() {
 void showCurrentGame() {
   Move * currentMove = gameMoves;
   do {
-    showColor(currentMove->color);    
+    showColor(currentMove->color);
     currentMove = currentMove->next;
   } while (currentMove != NULL);
 }
 
-void gameLoop() {
-  if (!isPlayerPlaying) {
-    showCurrentGame();
-    isPlayerPlaying = true;
-    return;
+void handleColorPress(int color) {
+  if (color == currentMove2find->color) {
+    showColorWhileButton(color);
+    currentMove2find = currentMove2find->next;
+    if (currentMove2find == NULL){
+      delay(300);
+      addNewGameMove();
+    }
+  } else {
+    showWrongColor(color);
+    newGame();
+    currentMove2find = NULL;
   }
 
-  tryReadButtons();
+  if (currentMove2find == NULL) {
+    showCurrentGame();
+    resetMove2Find();
+  }
+}
 
-  sleepNow();     // sleep function called here
+void gameLoop() {
+
+  int color = tryReadButtons();
+  if (color != -1) {
+    handleColorPress(color);
+    return;
+  }
+  sleepNow();
 }
 

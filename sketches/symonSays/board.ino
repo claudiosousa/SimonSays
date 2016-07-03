@@ -38,3 +38,17 @@ void showColor(int color) {
   digitalWrite(colorPin[color], LOW);
 }
 
+void showColorWhileButton(int color){
+
+}
+
+void showWrongColor(int color){
+  delay(200);
+  toneAC(note_C3);
+  digitalWrite(colorPin[color], HIGH);
+  delay(1500);
+  toneAC(0);
+  digitalWrite(colorPin[color], LOW);
+  delay(1500);
+}
+
