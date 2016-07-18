@@ -6,3 +6,7 @@ Click on the pic to see a video:
 
 
 Other [pics](https://goo.gl/photos/iYqUHN8QKYBmx9mD7)
+
+[3d box model](https://www.tinkercad.com/things/9cYP6NZHMjv-symon-says-game)
+
+[Schema](https://circuits.io/circuits/2417301-simon-says-game)
